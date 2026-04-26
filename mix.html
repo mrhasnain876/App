@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Attendance Register</title>
+<link rel="stylesheet" href="b.css">
+</head>
+<style>
+
+/* 🧾 BODY */
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+/* CONTROLS INLINE FIX */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* LABEL FIX */
+.controls label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* SELECT SIZE FIX */
+select {
+    min-width: 100px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+
+    background: linear-gradient(135deg, blacj, #6dd5fa);
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;  /* ✅ PERFECT CIRCLE */
+
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+/* HOVER ANIMATION */
+.logo:hover {
+    border: 1px solid #000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+.logo:active {
+    
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    transition: 0.1s;
+}
+/* 🔍 SEARCH BAR ADVANCED */
+.search-bar {
+    display: none;
+    margin: 10px 0;
+    animation: slideDown 0.3s ease;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+/* FOCUS EFFECT */
+.search-bar input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52,152,219,0.3);
+}
+
+/* ANIMATION */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* TOP BAR (NEW) */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* SEARCH BAR (NEW) */
+.search-bar {
+    display: none;
+    margin: 10px 0;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+}
+
+/* TITLE */
+h2 {
+    color: #2c3e50;
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* CONTROLS */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* CONTROL GROUP (NEW FIX) */
+.control-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Month/Year fix */
+.control-group select {
+    min-width: 120px;
+}
+
+/* BUTTONS */
+button, select {
+    padding: 6px 14px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+button:hover {
+     background: linear-gradient(135deg, #3498db, black);
+
+    color: #fff;
+}
+
+/* TABLE CONTAINER */
+.table-container {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* TABLE */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* HEADER */
+th {
+    background: #f8f9fa;
+    color: #666;
+    border-bottom: 1px solid #eee;
+    padding: 10px 6px;
+    font-size: 12px;
+}
+
+/* CELLS */
+td {
+    border-bottom: 1px solid #f1f1f1;
+    padding: 6px;
+    font-size: 12px;
+}
+
+/* SR CENTER FIX */
+td:first-child {
+    text-align: center;
+}
+
+/* INPUT */
+input {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: 0.15s;
+}
+
+/* FOCUS */
+input:focus {
+    outline: none;
+    border-color: #000;
+    background: #fff;
+}
+
+/* NAME */
+.name {
+    width: 160px;
+}
+
+/* STATUS COLORS */
+.present { background: #d4edda !important; }
+.absent { background: #f8d7da !important; }
+.leave { background: #fff3cd !important; }
+.holiday { background: #e2e3e5 !important; }
+
+/* STICKY */
+th:first-child, td:first-child,
+th:nth-child(2), td:nth-child(2) {
+    background: #fff;
+    border-right: 1px solid #eee;
+}
+
+/* WIDTH FIX */
+th:first-child, td:first-child {
+    width: 60px;
+    min-width: 60px;
+}
+
+th:nth-child(2), td:nth-child(2) {
+    width: 180px;
+    min-width: 180px;
+}
+
+/* STICKY FIRST COLUMN */
+th:first-child,
+td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 5;
+    border-right: 1px solid #ddd;
+}
+
+/* STICKY SECOND COLUMN */
+th:nth-child(2),
+td:nth-child(2) {
+    position: sticky;
+    left: 60px;
+    z-index: 4;
+    border-right: 1px solid #ddd;
+}
+/* FULL BLOCK LOCKED */
+.locked {
+    background: #e0e0e0;
+    color: #888;
+    cursor: not-allowed;
+    pointer-events: none;   /* 🔥 no click at all */
+}
+
+
+.locked input {
+    pointer-events: none;
+}
+
+/* 📱 MOBILE RESPONSIVE */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    h2 {
+        font-size: 16px;
+    }
+
+    input {
+        width: 24px;
+        height: 24px;
+    }
+
+    .controls {
+        justify-content: flex-start;
+    }
+}
+/* CONTROLS INLINE FIX */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* LABEL FIX */
+.controls label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* SELECT SIZE FIX */
+select {
+    min-width: 100px;
+}
+
+/* 🔥 HS LOGO ANIMATION */
+.logo {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3498db, black);
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+
+    transition: 0.3s;
+}
+
+/* HOVER ANIMATION */
+.logo:hover {
+    
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* 🔍 SEARCH BAR ADVANCED */
+.search-bar {
+    display: none;
+    margin: 10px 0;
+    animation: slideDown 1.3s ease;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+/* FOCUS EFFECT */
+.search-bar input:focus {
+    border-color: #3498db,black;
+    box-shadow: 0 0 8px rgba(52,152,219,0.3);
+}
+
+/* ANIMATION */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+<body>
+
+<div class="top-bar">
+    <h2>📋 MONTHLY ATTENDANCE REGISTER</h2>
+
+    <!-- HS LOGO -->
+    <div class="logo" onclick="toggleSearch()">HS</div>
+</div>
+
+<!-- SEARCH -->
+<div id="searchBar" class="search-bar">
+    <input type="text" placeholder="🔍 Search student..." oninput="searchStudent(this.value)">
+</div>
+
+<div class="controls">
+    
+    <label>Year:</label>
+    <select id="year" onchange="generateTable()"></select>
+
+    <label>Month:</label>
+    <select id="month" onchange="generateTable()"></select>
+
+    <button onclick="saveData()">💾</button>
+    <button onclick="loadData()">📂</button>
+    <button onclick="clearData()">❌</button>
+    <button onclick="clearNames()">🧹</button>
+
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr id="headerRow"></tr>
+</thead>
+<tbody id="tableBody"></tbody>
+</table>
+</div>
+
+<div class="bottom-controls">
+    Rows:
+    <input type="number" id="rowCount" value="1" min="1">
+
+    <button onclick="addRow()">➕</button>
+    <button onclick="deleteRow()">➖</button>
+</div>
+
+<script>
+    const MAX_ROWS = 5000;
+
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+let monthSelect = document.getElementById("month");
+let yearSelect = document.getElementById("year");
+let headerRow = document.getElementById("headerRow");
+let tableBody = document.getElementById("tableBody");
+
+months.forEach((m,i)=>{
+    let opt = document.createElement("option");
+    opt.value = i;
+    opt.text = m;
+    monthSelect.appendChild(opt);
+});
+
+let currentYear = new Date().getFullYear();
+
+for(let y=currentYear; y<=currentYear+50; y++){
+    let opt = document.createElement("option");
+    opt.value = y;
+    opt.text = y;
+    yearSelect.appendChild(opt);
+}
+
+monthSelect.value = new Date().getMonth();
+yearSelect.value = currentYear;
+
+let totalRows = localStorage.getItem("totalRows") 
+    ? parseInt(localStorage.getItem("totalRows")) 
+    : 10;
+
+
+function generateTable(){
+
+    let year = +yearSelect.value;
+    let month = +monthSelect.value;
+    let days = new Date(year, month+1, 0).getDate();
+
+    let today = new Date();
+    today.setHours(0,0,0,0);
+
+
+    let header = "<th>Sr</th><th>Name</th>";
+    for(let i=1;i<=days;i++) header += `<th>${i}</th>`;
+    header += "<th>P</th><th>A</th><th>L</th><th>%</th>";
+    headerRow.innerHTML = header;
+
+    let body = "";
+
+    for(let r=0;r<totalRows;r++){
+
+        body += `<tr>
+        <td>${r+1}</td>
+        <td><input class="name" id="name_${r}" oninput="saveNames()"></td>`;
+
+        for(let d=1; d<=days; d++){
+
+            let dateObj = new Date(year, month, d);
+            dateObj.setHours(0,0,0,0);
+
+            let isSunday = dateObj.getDay() === 0;
+            let isPast = dateObj < today;
+
+            let id = `cell_${r}_${d}`;
+
+            if(isSunday){                
+                body += `<td><input value="H" class="holiday locked" id="${id}" readonly></td>`;                
+            }                
+            else if(isPast){                
+                body += `<td><input class="locked" id="${id}" readonly></td>`;                
+            }                
+            else{                
+                body += `<td><input id="${id}" onclick="handleClick(this, ${r})"></td>`;                
+            }                
+        }                
+
+        body += `
+        <td><input id="p_${r}" readonly></td>
+        <td><input id="a_${r}" readonly></td>
+        <td><input id="l_${r}" readonly></td>
+        <td><input id="per_${r}" readonly></td>
+        </tr>`;
+    }
+
+    tableBody.innerHTML = body;
+
+    loadNames();
+    loadData();
+}
+
+
+function handleClick(input,row){
+
+    input.classList.remove("present","absent","leave");
+
+    if(input.value===""){
+        input.value="P";
+        input.classList.add("present");
+    }
+    else if(input.value==="P"){
+        input.value="A";
+        input.classList.add("absent");
+    }
+    else if(input.value==="A"){
+        input.value="L";
+        input.classList.add("leave");
+    }
+    else{
+        input.value="P";
+        input.classList.add("present");
+    }
+
+    updateTotals(row);
+    saveData();
+}
+
+
+function updateTotals(row){
+
+    let inputs = document.querySelectorAll(`[id^="cell_${row}_"]`);
+
+    let p=0,a=0,l=0,total=0;
+
+    inputs.forEach(i=>{
+        if(i.value){
+            total++;
+            if(i.value==="P") p++;
+            if(i.value==="A") a++;
+            if(i.value==="L") l++;
+        }
+    });
+
+    document.getElementById(`p_${row}`).value = p;
+    document.getElementById(`a_${row}`).value = a;
+    document.getElementById(`l_${row}`).value = l;
+
+    let percent = total ? ((p / total) * 100).toFixed(1) : 0;
+    document.getElementById(`per_${row}`).value = percent + "%";
+}
+
+
+function searchStudent(val){
+
+    val = val.toLowerCase();
+
+    document.querySelectorAll("#tableBody tr").forEach(row=>{
+        let input = row.querySelector(".name");
+        let name = input.value ? input.value.toLowerCase() : "";
+        row.style.display = name.includes(val) ? "" : "none";
+    });
+}
+
+
+function getKey(){
+    return "attendance_"+yearSelect.value+"_"+monthSelect.value;
+}
+
+function saveData(){
+    let data = {};
+    document.querySelectorAll("input").forEach(i=>{
+        data[i.id]=i.value;
+    });
+    localStorage.setItem(getKey(), JSON.stringify(data));
+}
+
+function loadData(){
+
+    let data = JSON.parse(localStorage.getItem(getKey()));
+    if(!data) return;
+
+    document.querySelectorAll("input").forEach(i=>{
+        if(data[i.id]){
+            i.value = data[i.id];
+
+            i.classList.remove("present","absent","leave");
+
+            if(i.value==="P") i.classList.add("present");
+            if(i.value==="A") i.classList.add("absent");
+            if(i.value==="L") i.classList.add("leave");
+        }
+    });
+
+    for(let r=0;r<totalRows;r++) updateTotals(r);
+}
+
+
+function saveNames(){
+    let n={};
+    document.querySelectorAll(".name").forEach(i=> n[i.id]=i.value);
+    localStorage.setItem("studentNames", JSON.stringify(n));
+}
+
+function loadNames(){
+    let n = JSON.parse(localStorage.getItem("studentNames"));
+    if(!n) return;
+
+    document.querySelectorAll(".name").forEach(i=>{
+        if(n[i.id]) i.value=n[i.id];
+    });
+}
+
+
+function clearNames(){
+    if(confirm("Clear all names?")){
+        localStorage.removeItem("studentNames");
+        document.querySelectorAll(".name").forEach(i=> i.value="");
+    }
+}
+
+function clearData(){
+    if(confirm("Delete all data?")){
+        localStorage.removeItem(getKey());
+        generateTable();
+    }
+}
+
+
+function addRow(){
+    if(totalRows >= MAX_ROWS){
+        alert("Max limit reached");
+        return;
+    }
+
+    totalRows++;
+    localStorage.setItem("totalRows", totalRows);
+    generateTable();
+}
+
+function deleteRow(){
+    if(totalRows > 1){
+        totalRows--;
+        localStorage.setItem("totalRows", totalRows);
+        generateTable();
+    }
+}
+
+
+generateTable();
+
+function toggleSearch(){
+    let bar = document.getElementById("searchBar");
+    bar.style.display = bar.style.display === "block" ? "none" : "block";
+}
+
+
+function searchStudent(val){
+
+    val = val.toLowerCase();
+
+    document.querySelectorAll("#tableBody tr").forEach(row=>{
+        let input = row.querySelector(".name");
+        let name = input.value ? input.value.toLowerCase() : "";
+
+        if(name.includes(val)){
+            row.style.display = "";
+        }else{
+            row.style.display = "none";
+        }
+    });
+}
+function addRow() {
+    
+    let count = parseInt(prompt("How many rows do you want to add?"), 10);
+    
+    if (isNaN(count) || count <= 0) {
+        alert("Invalid number");
+        return;
+    }
+    
+    if (confirm(`Are you sure you want to add ${count} rows?`)) {
+        
+        if (totalRows + count > MAX_ROWS) {
+            alert("Max limit reached");
+            return;
+        }
+        
+        totalRows += count;
+        localStorage.setItem("totalRows", totalRows);
+        generateTable();
+    }
+}
+function deleteRow() {
+    let count = parseInt(document.getElementById("rowCount").value, 10);
+
+    if (isNaN(count) || count <= 0) {
+        alert("Invalid number");
+        return;
+    }
+
+    if (!confirm(`Delete ${count} rows?`)) return;
+
+    totalRows -= count;
+
+    if (totalRows < 1) totalRows = 1;
+
+    localStorage.setItem("totalRows", totalRows);
+
+    generateTable();
+}
+
+
+</script>
+
+</body>
+</html>
